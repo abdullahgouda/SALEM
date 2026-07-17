@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    font-family: "Noto Sans Arabic", sans-serif;
+}
+
+html {
+  direction: rtl;
+}
+
+
+svg *:focus {
+  outline: none !important;
+}
+
+svg {
+  outline: none !important;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+@media (max-width: 768px) {
+
+  html,
+  body,
+  #root {
+    overflow-y: auto;
+    /* Mobile: Scroll */
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* SweetAlert2 RTL (عربي) */
+.swal2-rtl {
+  direction: rtl;
+  text-align: right;
+}
+.swal2-rtl .swal2-actions {
+  flex-direction: row-reverse;
+}

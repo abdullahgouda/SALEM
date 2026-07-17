@@ -1,0 +1,2271 @@
+{
+  "info": {
+    "name": "Salem_BackEnd APIs",
+    "description": "Postman collection for Authentication, Department, Incidence, Notification, and Home endpoints.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "2bd05ec8-8593-44e8-8fdc-b6744514a8b4"
+  },
+  "item": [
+    {
+      "name": "Department",
+      "item": [
+        {
+          "name": "Create Department (form-data)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 201', function () {",
+                  "  pm.response.to.have.status(201);",
+                  "});",
+                  "const jsonData = pm.response.json();",
+                  "if (jsonData.department && jsonData.department.id) pm.environment.set('department_id', jsonData.department.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employee_access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "Name",
+                  "value": "{{department_name}}",
+                  "type": "text"
+                },
+                {
+                  "key": "Logo",
+                  "type": "file",
+                  "src": ""
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/department/create/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "department",
+                "create"
+              ]
+            },
+            "description": "Create Department using form-data (Name + Logo file). Requires Employee access token."
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Departments",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/department/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "department",
+                ""
+              ]
+            },
+            "description": "Get all departments."
+          },
+          "response": []
+        },
+        {
+          "name": "Update Department (form-data)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employee_access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "Name",
+                  "value": "{{department_updated_name}}",
+                  "type": "text"
+                },
+                {
+                  "key": "Logo",
+                  "type": "file",
+                  "src": ""
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/department/{{department_id}}/update/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "department",
+                "{{department_id}}",
+                "update",
+                ""
+              ]
+            },
+            "description": "Update Department name and/or logo using form-data. Requires Employee access token."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Department",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employee_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/department/{{department_id}}/delete/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "department",
+                "{{department_id}}",
+                "delete",
+                ""
+              ]
+            },
+            "description": "Delete department by id. Requires Employee access token."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Employee",
+      "item": [
+        {
+          "name": "Get All Employees",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employee_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/employee/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "employee",
+                ""
+              ]
+            },
+            "description": "Get all employees with Name, Email, Role, and Account_Status (نشط/معطل). Requires Employee access token."
+          },
+          "response": []
+        },
+        {
+          "name": "Update Employee",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employee_access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"Name\": \"{{employee_update_name}}\",\n  \"Phone_Number\": \"{{employee_update_phone_number}}\",\n  \"Email\": \"{{employee_update_email}}\",\n  \"Role\": \"{{employee_update_role}}\",\n  \"Region\": \"{{employee_update_region}}\",\n  \"Department\": \"{{employee_update_department}}\",\n  \"Account_Status\": \"{{employee_update_account_status}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/employee/{{employee_id}}/update/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "employee",
+                "{{employee_id}}",
+                "update",
+                ""
+              ]
+            },
+            "description": "Update employee data by id. Requires Employee access token."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Employee",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employee_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/employee/{{employee_id}}/delete/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "employee",
+                "{{employee_id}}",
+                "delete",
+                ""
+              ]
+            },
+            "description": "Delete employee by id. Requires Employee access token."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Incidence",
+      "item": [
+        {
+          "name": "Get All Incidences",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/incidence/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "incidence",
+                ""
+              ]
+            },
+            "description": "Get all incidences."
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Incidences (With Filters)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/incidence/?Department={{incidence_filter_department}}&Date={{incidence_filter_date}}&Status={{incidence_filter_status}}&Search={{incidence_filter_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "incidence",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "Department",
+                  "value": "{{incidence_filter_department}}"
+                },
+                {
+                  "key": "Date",
+                  "value": "{{incidence_filter_date}}"
+                },
+                {
+                  "key": "Status",
+                  "value": "{{incidence_filter_status}}"
+                },
+                {
+                  "key": "Search",
+                  "value": "{{incidence_filter_id}}"
+                }
+              ]
+            },
+            "description": "Get incidences with optional filters: Department, Date (YYYY-MM-DD), Status, and Search by id."
+          },
+          "response": []
+        },
+        {
+          "name": "Get New Incidences",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/incidence/new/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "incidence",
+                "new",
+                ""
+              ]
+            },
+            "description": "Get all incidences with status New."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Assigned Incidences",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/incidence/assigned/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "incidence",
+                "assigned",
+                ""
+              ]
+            },
+            "description": "Get all incidences with status Assigned."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Review Incidences",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/incidence/review/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "incidence",
+                "review",
+                ""
+              ]
+            },
+            "description": "Get all incidences with status Review."
+          },
+          "response": []
+        },
+        {
+          "name": "Get In Progress Incidences",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/incidence/in-progress/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "incidence",
+                "in-progress",
+                ""
+              ]
+            },
+            "description": "Get all incidences with status In_Progress."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Forworded Incidences",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/incidence/forworded/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "incidence",
+                "forworded",
+                ""
+              ]
+            },
+            "description": "Get all incidences with status Forworded."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Completed Incidences",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/incidence/completed/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "incidence",
+                "completed",
+                ""
+              ]
+            },
+            "description": "Get all incidences with status Completed/Finished."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Incidence Status By ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/incidence/{{incidence_id}}/status/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "incidence",
+                "{{incidence_id}}",
+                "status",
+                ""
+              ]
+            },
+            "description": "Get status, Lat, Long, and Location_Name for a single incidence by id."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Incidence By ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/incidence/{{incidence_id}}/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "incidence",
+                "{{incidence_id}}",
+                ""
+              ]
+            },
+            "description": "Get full incidence details for a single incidence by id."
+          },
+          "response": []
+        },
+        {
+          "name": "Citizin Create Incidence (form-data)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 201', function () {",
+                  "  pm.response.to.have.status(201);",
+                  "});",
+                  "const jsonData = pm.response.json();",
+                  "if (jsonData.incidence && jsonData.incidence.id) pm.environment.set('incidence_id', jsonData.incidence.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{citizin_access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "Description",
+                  "value": "{{incidence_description}}",
+                  "type": "text"
+                },
+                {
+                  "key": "Latlatitude",
+                  "value": "{{incidence_latlatitude}}",
+                  "type": "text"
+                },
+                {
+                  "key": "Longitude",
+                  "value": "{{incidence_longitude}}",
+                  "type": "text"
+                },
+                {
+                  "key": "Location_Name",
+                  "value": "{{incidence_location_name}}",
+                  "type": "text"
+                },
+                {
+                  "key": "Department",
+                  "value": "{{incidence_department}}",
+                  "type": "text"
+                },
+                {
+                  "key": "Image_Before_Analysis",
+                  "type": "file",
+                  "src": ""
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/incidence/citizin/create/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "incidence",
+                "citizin",
+                "create"
+              ]
+            },
+            "description": "Create incidence by citizin using form-data. Requires Citizin access token."
+          },
+          "response": []
+        },
+        {
+          "name": "Get My Citizin Incidences",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "const jsonData = pm.response.json();",
+                  "if (jsonData.incidences && jsonData.incidences.length > 0 && jsonData.incidences[0].id) {",
+                  "  pm.environment.set('incidence_id', jsonData.incidences[0].id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{citizin_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/incidence/citizin/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "incidence",
+                "citizin",
+                ""
+              ]
+            },
+            "description": "Get all incidences created by the logged-in citizin. Requires Citizin access token."
+          },
+          "response": []
+        },
+        {
+          "name": "Get My Citizin Incidence By ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{citizin_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/incidence/citizin/{{incidence_id}}/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "incidence",
+                "citizin",
+                "{{incidence_id}}",
+                ""
+              ]
+            },
+            "description": "Get one incidence by id for the logged-in citizin only. Returns 404 if incidence does not belong to this citizin."
+          },
+          "response": []
+        },
+        {
+          "name": "Assign Incidence To Employee",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "const jsonData = pm.response.json();",
+                  "if (jsonData.incidence && jsonData.incidence.id) pm.environment.set('incidence_id', jsonData.incidence.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employee_access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"Incidence_id\": \"{{incidence_id}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/incidence/assign/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "incidence",
+                "assign"
+              ]
+            },
+            "description": "Assign incidence to the logged-in employee from token. Requires Employee access token."
+          },
+          "response": []
+        },
+        {
+          "name": "Move Incidence To Completed (Admin/Supervisior)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employee_access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"Incidence_id\": \"{{incidence_id}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/incidence/complete/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "incidence",
+                "complete",
+                ""
+              ]
+            },
+            "description": "Move any incidence status to Completed (Finished). Requires Employee token with role admin or supervisior."
+          },
+          "response": []
+        },
+        {
+          "name": "Notify Department Region Operators",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employee_access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"Incidence_id\": \"{{incidence_id}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/incidence/notify-operators/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "incidence",
+                "notify-operators",
+                ""
+              ]
+            },
+            "description": "Send notifications to operators in the same employee department and region for a given incidence. Requires Employee access token."
+          },
+          "response": []
+        },
+        {
+          "name": "Move Incidence To In_Progress (POST Status Only)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employee_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/incidence/{{incidence_id}}/in-progress/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "incidence",
+                "{{incidence_id}}",
+                "in-progress",
+                ""
+              ]
+            },
+            "description": "Move incidence status from Assigned to In_Progress using employee token and incidence id in URL. No body required."
+          },
+          "response": []
+        },
+        {
+          "name": "Move Incidence To In_Progress (PATCH + Update Location)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employee_access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"Lat\": \"{{incidence_update_lat}}\",\n  \"Long\": \"{{incidence_update_long}}\",\n  \"Location_Name\": \"{{incidence_update_location_name}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/incidence/{{incidence_id}}/in-progress/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "incidence",
+                "{{incidence_id}}",
+                "in-progress",
+                ""
+              ]
+            },
+            "description": "Update Lat/Long/Location_Name and move incidence from Assigned to In_Progress using employee token and incidence id in URL."
+          },
+          "response": []
+        },
+        {
+          "name": "Move Incidence To Review (POST + form-data)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employee_access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "Image_After_Analysis",
+                  "type": "file",
+                  "src": ""
+                },
+                {
+                  "key": "What_Was_Done",
+                  "value": "{{incidence_what_was_done}}",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/incidence/{{incidence_id}}/review/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "incidence",
+                "{{incidence_id}}",
+                "review",
+                ""
+              ]
+            },
+            "description": "Upload Image_After_Analysis and What_Was_Done, then move incidence from In_Progress to Review."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Home",
+      "item": [
+        {
+          "name": "Get Home Dashboard",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employee_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/home/dashboard/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "home",
+                "dashboard",
+                ""
+              ]
+            },
+            "description": "Get Home dashboard summary for logged-in employee. Requires Employee access token."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Incidences Status Overview",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employee_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/home/incidence/status-overview/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "home",
+                "incidence",
+                "status-overview",
+                ""
+              ]
+            },
+            "description": "Get monthly overview for incidences: total, assigned+in progress, in review, forwarded, and completed in this month."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Incidences Heatmap Data",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employee_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/home/incidence/heatmap/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "home",
+                "incidence",
+                "heatmap",
+                ""
+              ]
+            },
+            "description": "Get incidence density points for heatmap (count per location coordinates)."
+          },
+          "response": []
+        },
+        {
+          "name": "Search Location Incidences Analysis",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employee_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/home/incidence/location-analysis/?location_name={{location_search_name}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "home",
+                "incidence",
+                "location-analysis",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "location_name",
+                  "value": "{{location_search_name}}"
+                }
+              ]
+            },
+            "description": "Search incidences by Location_Name and return incidents details, solve times, average solve time, total incidences, and the most frequent department on this street."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Incidences Status Summary By Date",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employee_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/home/incidence/status-summary-by-date/?start_date={{home_status_summary_start_date}}&end_date={{home_status_summary_end_date}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "home",
+                "incidence",
+                "status-summary-by-date",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "start_date",
+                  "value": "{{home_status_summary_start_date}}"
+                },
+                {
+                  "key": "end_date",
+                  "value": "{{home_status_summary_end_date}}"
+                }
+              ]
+            },
+            "description": "Get incidences counts by status in a custom date range (Completed, Review, Forworded, Total, and Assigned+In_Progress)."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Department Incidences Summary By Date",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employee_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/home/incidence/department-summary-by-date/?start_date={{home_department_summary_start_date}}&end_date={{home_department_summary_end_date}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "home",
+                "incidence",
+                "department-summary-by-date",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "start_date",
+                  "value": "{{home_department_summary_start_date}}"
+                },
+                {
+                  "key": "end_date",
+                  "value": "{{home_department_summary_end_date}}"
+                }
+              ]
+            },
+            "description": "Get total incidences and incidences count per department in a custom date range."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Incidences Time Counts By Date",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employee_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/home/incidence/time-counts-by-date/?start_date={{home_time_counts_start_date}}&end_date={{home_time_counts_end_date}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "home",
+                "incidence",
+                "time-counts-by-date",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "start_date",
+                  "value": "{{home_time_counts_start_date}}"
+                },
+                {
+                  "key": "end_date",
+                  "value": "{{home_time_counts_end_date}}"
+                }
+              ]
+            },
+            "description": "Get incidences counts grouped by day, week, and month in a custom date range."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Weekly Incidences Chart Data",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employee_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/home/incidence/weekly-chart/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "home",
+                "incidence",
+                "weekly-chart",
+                ""
+              ]
+            },
+            "description": "Get weekly chart data for incidences created during the current week."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Monthly Department Incidences Chart Data",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employee_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/home/incidence/monthly-department-chart/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "home",
+                "incidence",
+                "monthly-department-chart",
+                ""
+              ]
+            },
+            "description": "Get monthly chart data: total incidences this month and count per department."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Latest Incidence Per Department",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employee_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/home/incidence/latest-per-department/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "home",
+                "incidence",
+                "latest-per-department",
+                ""
+              ]
+            },
+            "description": "Get the latest incidence for each department."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Department New Incidences",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employee_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/home/incidence/new/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "home",
+                "incidence",
+                "new",
+                ""
+              ]
+            },
+            "description": "Get all incidences with status New in the logged-in employee department."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Employee Completed And Current Incidences",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employee_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/home/incidence/employee/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "home",
+                "incidence",
+                "employee",
+                ""
+              ]
+            },
+            "description": "Get completed and current incidences assigned to the logged-in employee."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Signup",
+          "item": [
+            {
+              "name": "Employee Signup",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 201', function () {",
+                      "  pm.response.to.have.status(201);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Name\": \"{{employee_signup_name}}\",\n  \"National_Id\": \"{{employee_signup_national_id}}\",\n  \"Phone_Number\": \"{{employee_signup_phone_number}}\",\n  \"Email\": \"{{employee_signup_email}}\",\n  \"Password\": \"{{employee_signup_password}}\",\n  \"User_Type\": \"employee\",\n  \"Role\": \"{{employee_signup_role}}\",\n  \"Region\": \"{{employee_signup_region}}\",\n  \"Department\": \"{{employee_signup_department}}\",\n  \"Account_Status\": \"{{employee_signup_account_status}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/employee/signup/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "employee",
+                    "signup"
+                  ]
+                },
+                "description": "Signup API for employee user."
+              },
+              "response": []
+            },
+            {
+              "name": "Citizin Signup",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 201', function () {",
+                      "  pm.response.to.have.status(201);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Name\": \"{{signup_name}}\",\n  \"Phone_Number\": \"{{signup_phone_number}}\",\n  \"Email\": \"{{signup_email}}\",\n  \"National_Id\": \"{{signup_national_id}}\",\n  \"Password\": \"{{signup_password}}\",\n  \"User_Type\": \"citizin\",\n  \"Birthdate\": \"{{signup_birthdate}}\",\n  \"username\": \"{{signup_username}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/citizin/signup/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "citizin",
+                    "signup"
+                  ]
+                },
+                "description": "Signup API for citizin user."
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Login",
+          "item": [
+            {
+              "name": "Employee Login",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 200', function () {",
+                      "  pm.response.to.have.status(200);",
+                      "});",
+                      "const jsonData = pm.response.json();",
+                      "pm.environment.set('employee_access_token', jsonData.Asscess_Token || jsonData.Access_Token || '');",
+                      "pm.environment.set('employee_refresh_token', jsonData.Refresh_Token || '');"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"National_id\": \"{{employee_national_id}}\",\n  \"Password\": \"{{employee_password}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/employee/login/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "employee",
+                    "login"
+                  ]
+                },
+                "description": "Login for employee using National_id and Password."
+              },
+              "response": []
+            },
+            {
+              "name": "Citizin Login (Email or Phone)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 200', function () {",
+                      "  pm.response.to.have.status(200);",
+                      "});",
+                      "const jsonData = pm.response.json();",
+                      "pm.environment.set('citizin_access_token', jsonData.Access_Token || '');",
+                      "pm.environment.set('citizin_refresh_token', jsonData.Refresh_Token || '');"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Email_or_Phone_Number\": \"{{citizin_identifier}}\",\n  \"Password\": \"{{citizin_password}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/citizin/login/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "citizin",
+                    "login"
+                  ]
+                },
+                "description": "Single login API for citizin using Email_or_Phone_Number and Password."
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Password",
+          "item": [
+            {
+              "name": "Forgot Password (Send OTP)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 200', function () {",
+                      "  pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Email\": \"{{forgot_email}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/password/forgot/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "password",
+                    "forgot"
+                  ]
+                },
+                "description": "Send OTP to email for password reset."
+              },
+              "response": []
+            },
+            {
+              "name": "Verify OTP",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 200', function () {",
+                      "  pm.response.to.have.status(200);",
+                      "});",
+                      "pm.environment.set('otp_verified_email', pm.variables.get('forgot_email'));"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Email\": \"{{forgot_email}}\",\n  \"OTP\": \"{{otp_code}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/password/verify-otp/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "password",
+                    "verify-otp"
+                  ]
+                },
+                "description": "Verify OTP sent to email."
+              },
+              "response": []
+            },
+            {
+              "name": "Reset Password",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status code is 200', function () {",
+                      "  pm.response.to.have.status(200);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Email\": \"{{forgot_email}}\",\n  \"New_Password\": \"{{new_password}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/password/reset/",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "password",
+                    "reset"
+                  ]
+                },
+                "description": "Reset password after OTP verification."
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000"
+    },
+    {
+      "key": "employee_national_id",
+      "value": "11111111111111"
+    },
+    {
+      "key": "employee_password",
+      "value": "pass123"
+    },
+    {
+      "key": "employee_access_token",
+      "value": ""
+    },
+    {
+      "key": "employee_refresh_token",
+      "value": ""
+    },
+    {
+      "key": "citizin_identifier",
+      "value": "mona@test.com"
+    },
+    {
+      "key": "citizin_password",
+      "value": "citpass"
+    },
+    {
+      "key": "citizin_access_token",
+      "value": ""
+    },
+    {
+      "key": "citizin_refresh_token",
+      "value": ""
+    },
+    {
+      "key": "signup_name",
+      "value": "Nour"
+    },
+    {
+      "key": "signup_phone_number",
+      "value": "01033334444"
+    },
+    {
+      "key": "signup_email",
+      "value": "nour@test.com"
+    },
+    {
+      "key": "signup_national_id",
+      "value": "44444444444444"
+    },
+    {
+      "key": "signup_password",
+      "value": "nourPass123"
+    },
+    {
+      "key": "signup_birthdate",
+      "value": "2000-12-31"
+    },
+    {
+      "key": "signup_username",
+      "value": "nour2000"
+    },
+    {
+      "key": "employee_signup_name",
+      "value": "Ahmed"
+    },
+    {
+      "key": "employee_signup_national_id",
+      "value": "77777777777777"
+    },
+    {
+      "key": "employee_signup_phone_number",
+      "value": "01077778888"
+    },
+    {
+      "key": "employee_signup_email",
+      "value": "ahmed.employee@test.com"
+    },
+    {
+      "key": "employee_signup_password",
+      "value": "employeePass123"
+    },
+    {
+      "key": "employee_signup_role",
+      "value": "operator"
+    },
+    {
+      "key": "employee_signup_region",
+      "value": "Cairo"
+    },
+    {
+      "key": "employee_signup_department",
+      "value": "Operations"
+    },
+    {
+      "key": "employee_signup_account_status",
+      "value": "نشط"
+    },
+    {
+      "key": "employee_id",
+      "value": "1"
+    },
+    {
+      "key": "employee_update_name",
+      "value": "Updated Employee Name"
+    },
+    {
+      "key": "employee_update_phone_number",
+      "value": "01099990000"
+    },
+    {
+      "key": "employee_update_email",
+      "value": "updated.employee@test.com"
+    },
+    {
+      "key": "employee_update_role",
+      "value": "technical"
+    },
+    {
+      "key": "employee_update_region",
+      "value": "Alex"
+    },
+    {
+      "key": "employee_update_department",
+      "value": "Operations"
+    },
+    {
+      "key": "employee_update_account_status",
+      "value": "معطل"
+    },
+    {
+      "key": "forgot_email",
+      "value": "otpuser@test.com"
+    },
+    {
+      "key": "otp_verified_email",
+      "value": ""
+    },
+    {
+      "key": "otp_code",
+      "value": "000000"
+    },
+    {
+      "key": "new_password",
+      "value": "newPass123"
+    },
+    {
+      "key": "department_name",
+      "value": "Operations"
+    },
+    {
+      "key": "department_updated_name",
+      "value": "Operations Updated"
+    },
+    {
+      "key": "department_id",
+      "value": "1"
+    },
+    {
+      "key": "incidence_description",
+      "value": "There is road damage near the square."
+    },
+    {
+      "key": "incidence_latlatitude",
+      "value": "30.04442"
+    },
+    {
+      "key": "incidence_longitude",
+      "value": "31.23571"
+    },
+    {
+      "key": "incidence_location_name",
+      "value": "Nasr City"
+    },
+    {
+      "key": "incidence_department",
+      "value": "1"
+    },
+    {
+      "key": "incidence_id",
+      "value": ""
+    },
+    {
+      "key": "incidence_filter_department",
+      "value": "1"
+    },
+    {
+      "key": "incidence_filter_date",
+      "value": "2026-05-05"
+    },
+    {
+      "key": "incidence_filter_status",
+      "value": "assigned"
+    },
+    {
+      "key": "incidence_filter_id",
+      "value": ""
+    },
+    {
+      "key": "incidence_update_lat",
+      "value": "30.05555"
+    },
+    {
+      "key": "incidence_update_long",
+      "value": "31.26666"
+    },
+    {
+      "key": "incidence_update_location_name",
+      "value": "Updated Location"
+    },
+    {
+      "key": "incidence_what_was_done",
+      "value": "The damaged area was repaired and secured."
+    },
+    {
+      "key": "home_status_summary_start_date",
+      "value": "2026-05-01"
+    },
+    {
+      "key": "home_status_summary_end_date",
+      "value": "2026-05-31"
+    },
+    {
+      "key": "home_department_summary_start_date",
+      "value": "2026-05-01"
+    },
+    {
+      "key": "home_department_summary_end_date",
+      "value": "2026-05-31"
+    },
+    {
+      "key": "home_time_counts_start_date",
+      "value": "2026-05-01"
+    },
+    {
+      "key": "home_time_counts_end_date",
+      "value": "2026-05-31"
+    },
+    {
+      "key": "location_search_name",
+      "value": "Nile Street"
+    }
+  ]
+}

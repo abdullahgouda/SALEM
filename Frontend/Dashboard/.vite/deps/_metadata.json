@@ -1,0 +1,142 @@
+{
+  "hash": "3a33c769",
+  "configHash": "5f9440c6",
+  "lockfileHash": "4bcf886c",
+  "browserHash": "7e209d00",
+  "optimized": {
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "37f24d5d",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "254f9b45",
+      "needsInterop": true
+    },
+    "i18next": {
+      "src": "../../node_modules/i18next/dist/esm/i18next.js",
+      "file": "i18next.js",
+      "fileHash": "ed188bd9",
+      "needsInterop": false
+    },
+    "react-i18next": {
+      "src": "../../node_modules/react-i18next/dist/es/index.js",
+      "file": "react-i18next.js",
+      "fileHash": "8a2dfe19",
+      "needsInterop": false
+    },
+    "react-router-dom": {
+      "src": "../../node_modules/react-router-dom/dist/index.mjs",
+      "file": "react-router-dom.js",
+      "fileHash": "57b8b21a",
+      "needsInterop": false
+    },
+    "framer-motion": {
+      "src": "../../node_modules/framer-motion/dist/es/index.mjs",
+      "file": "framer-motion.js",
+      "fileHash": "606fa0e5",
+      "needsInterop": false
+    },
+    "lucide-react": {
+      "src": "../../node_modules/lucide-react/dist/esm/lucide-react.js",
+      "file": "lucide-react.js",
+      "fileHash": "e9b1bf42",
+      "needsInterop": false
+    },
+    "@dnd-kit/core": {
+      "src": "../../node_modules/@dnd-kit/core/dist/core.esm.js",
+      "file": "@dnd-kit_core.js",
+      "fileHash": "de3753bc",
+      "needsInterop": false
+    },
+    "@dnd-kit/sortable": {
+      "src": "../../node_modules/@dnd-kit/sortable/dist/sortable.esm.js",
+      "file": "@dnd-kit_sortable.js",
+      "fileHash": "f30476bb",
+      "needsInterop": false
+    },
+    "@dnd-kit/utilities": {
+      "src": "../../node_modules/@dnd-kit/utilities/dist/utilities.esm.js",
+      "file": "@dnd-kit_utilities.js",
+      "fileHash": "84673651",
+      "needsInterop": false
+    },
+    "sweetalert2": {
+      "src": "../../node_modules/sweetalert2/dist/sweetalert2.esm.all.js",
+      "file": "sweetalert2.js",
+      "fileHash": "6e69c404",
+      "needsInterop": false
+    },
+    "axios": {
+      "src": "../../node_modules/axios/index.js",
+      "file": "axios.js",
+      "fileHash": "0023e8c5",
+      "needsInterop": false
+    },
+    "react-datepicker": {
+      "src": "../../node_modules/react-datepicker/dist/index.es.js",
+      "file": "react-datepicker.js",
+      "fileHash": "2cd50fff",
+      "needsInterop": false
+    },
+    "recharts": {
+      "src": "../../node_modules/recharts/es6/index.js",
+      "file": "recharts.js",
+      "fileHash": "1513c20c",
+      "needsInterop": false
+    },
+    "react-leaflet": {
+      "src": "../../node_modules/react-leaflet/lib/index.js",
+      "file": "react-leaflet.js",
+      "fileHash": "fba6f3a8",
+      "needsInterop": false
+    },
+    "leaflet": {
+      "src": "../../node_modules/leaflet/dist/leaflet-src.js",
+      "file": "leaflet.js",
+      "fileHash": "0315df85",
+      "needsInterop": true
+    },
+    "leaflet.heat": {
+      "src": "../../node_modules/leaflet.heat/dist/leaflet-heat.js",
+      "file": "leaflet__heat.js",
+      "fileHash": "0955b7f2",
+      "needsInterop": true
+    }
+  },
+  "chunks": {
+    "chunk-3S2UDREY": {
+      "file": "chunk-3S2UDREY.js"
+    },
+    "chunk-DHUVTM67": {
+      "file": "chunk-DHUVTM67.js"
+    },
+    "chunk-JSWFGIFZ": {
+      "file": "chunk-JSWFGIFZ.js"
+    },
+    "chunk-7NS7TKTQ": {
+      "file": "chunk-7NS7TKTQ.js"
+    },
+    "chunk-SHKVXIMB": {
+      "file": "chunk-SHKVXIMB.js"
+    },
+    "chunk-XBH5WR7H": {
+      "file": "chunk-XBH5WR7H.js"
+    },
+    "chunk-KVYTEHUX": {
+      "file": "chunk-KVYTEHUX.js"
+    },
+    "chunk-UJLH7WHR": {
+      "file": "chunk-UJLH7WHR.js"
+    },
+    "chunk-UXGIU4LZ": {
+      "file": "chunk-UXGIU4LZ.js"
+    },
+    "chunk-PR4QN5HX": {
+      "file": "chunk-PR4QN5HX.js"
+    }
+  }
+}

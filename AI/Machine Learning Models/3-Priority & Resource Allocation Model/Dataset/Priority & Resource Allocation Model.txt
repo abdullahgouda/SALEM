@@ -1,0 +1,21 @@
+🔹 Priority Logic (Rule + ML)
+
+P1 (High Priority):
+
+severity = High
+
+area_load عالي
+
+P3 (Low Priority):
+
+severity = Low
+
+area_load قليل
+
+🔹 Team Assignment
+
+لو team_skill_match عالي
+→ نفس الفريق
+
+غير كده
+→ فريق بديل

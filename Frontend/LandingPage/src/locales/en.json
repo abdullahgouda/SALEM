@@ -1,0 +1,69 @@
+{
+    "nav_home": "Home",
+    "nav_live": "Live State",
+    "nav_services": "Services",
+    "nav_download": "Download App",
+    "nav_contact": "Contact & Support",
+
+    "home_title": "Smart AI-Based Location & Excavation Management System",
+    "our_services": "Our Services",
+    "download_app": "Download App",
+
+
+    "live_title": "Live States",
+    "live_total_incidents": "Total Reported Incidents",
+    "live_avg_time": "Average Response Time",
+    "live_days": [
+        "Mon",
+        "Tue",
+        "Wed",
+        "Thu",
+        "Fri",
+        "Sat",
+        "Sun"
+    ],
+    "live_small_road": "Roads",
+    "live_small_elec": "Electricity",
+    "live_small_light": "Lighting",
+    "live_small_water": "Water",
+
+
+    "services_why": "Why You Can Choose Our Eco System",
+    "services_main1": "Experts in Delivering",
+    "services_main2": "Intelligent Road Repair and Traffic Management Systems",
+    "step_1_title": "Detection & Reporting",
+    "step_1_desc": "The system receives reports or data from citizens or authorities.",
+    "step_2_title": "AI Classification",
+    "step_2_desc": "Artificial intelligence classifies the report and links it to the responsible entity.",
+    "step_3_title": "Coordination Phase",
+    "step_3_desc": "The system coordinates the arrangement between parties (water → electricity → roads).",
+    "step_4_title": "Action & Update",
+    "step_4_desc": "After execution, the status is updated on the dashboard and shown to administrators.",
+
+
+    "download_small": "Get Our App Now",
+    "download_title": "Enable a Safer and Smarter Road Experience — with Salem.",
+    "download_desc1": "Report, track, and improve your city's roads with one intelligent platform.",
+    "download_desc2": "For reporting, you can download the application.",
+    "download_now": "Download Now!",
+
+
+    "contact_title": "Get In Touch With Us",
+    "contact_desc": "We'd love to hear from you! Whether you have a question about our project, need support, or want to collaborate — feel free to reach out.",
+    "contact_name": "Name",
+    "contact_email_input": "E-mail",
+    "contact_subject": "Subject",
+    "contact_message": "Message",
+    "contact_send": "Submit",
+    "contact_address": "Modern Academy, Maadi, Cairo, Egypt",
+    "contact_address_label": "Address",
+    "contact_email_label": "Email",
+    "contact_phone_label": "Phone",
+
+    
+    "footer_desc1": "It aims to enhance road infrastructure management and reduce accidents by improving communication between public authorities such as Water, Electricity, and Roads departments.",
+    "footer_desc2": "The system combines AI-powered incident classification, a centralized web dashboard, and a mobile application for citizens to report issues easily. Through real-time coordination and data analysis, SALEM helps ensure safer, more efficient, and well-maintained streets across Egypt.",
+    "footer_download_title": "Download App Now!!",
+    "footer_bottom_left": "Designed & Developed by ❤️ & ☕",
+    "footer_bottom_right": "Copyright © 2025. All rights reserved"
+}

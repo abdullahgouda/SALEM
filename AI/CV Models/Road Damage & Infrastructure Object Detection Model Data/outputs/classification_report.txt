@@ -1,0 +1,12 @@
+                   precision    recall  f1-score   support
+
+Concrete_Collapse       0.94      0.94      0.94       101
+  Electrical_Pole       0.93      0.94      0.94       101
+      Fallen_Tree       0.95      0.94      0.95       101
+             Fire       0.98      0.98      0.98        94
+          Garbage       0.92      0.97      0.94       101
+      Road_Damage       1.00      0.94      0.97       101
+
+         accuracy                           0.95       599
+        macro avg       0.95      0.95      0.95       599
+     weighted avg       0.95      0.95      0.95       599

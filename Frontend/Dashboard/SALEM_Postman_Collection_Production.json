@@ -1,0 +1,923 @@
+{
+  "info": {
+    "_postman_id": "6a4d07f4-6ca5-4ec0-a66b-5f705479ebea",
+    "name": "SALEM Backend APIs",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000"
+    },
+    {
+      "key": "access_token",
+      "value": ""
+    },
+    {
+      "key": "refresh_token",
+      "value": ""
+    },
+    {
+      "key": "incident_id",
+      "value": "1"
+    },
+    {
+      "key": "notification_id",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Signup (Citizen)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/signup/",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"citizen_user\",\n  \"email\": \"citizen@example.com\",\n  \"password\": \"StrongPass123!\",\n  \"user_type\": \"citizen\",\n  \"national_id\": \"12345678901234\",\n  \"phone_number\": \"01012345678\",\n  \"birth_date\": \"1995-05-20\"\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "Created",
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"uuid\": \"8a6af2ea-6f7b-4e49-b73f-2a306a7a13f0\",\n  \"username\": \"citizen_user\",\n  \"email\": \"citizen@example.com\",\n  \"user_type\": \"citizen\",\n  \"national_id\": \"12345678901234\",\n  \"phone_number\": \"01012345678\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Signup (Employee)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/signup/",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"employee_user\",\n  \"email\": \"employee@example.com\",\n  \"password\": \"StrongPass123!\",\n  \"user_type\": \"employee\",\n  \"national_id\": \"12345678901235\",\n  \"phone_number\": \"01012345679\",\n  \"department\": 1,\n  \"region\": 1,\n  \"role\": \"technician\"\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "Created",
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"uuid\": \"b8a6ce95-9289-413f-b2ff-3805c686d842\",\n  \"username\": \"employee_user\",\n  \"email\": \"employee@example.com\",\n  \"user_type\": \"employee\",\n  \"national_id\": \"12345678901235\",\n  \"phone_number\": \"01012345679\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/login/",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"citizen@example.com\",\n  \"password\": \"StrongPass123!\"\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "OK",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"تم تسجيل الدخول بنجاح\",\n  \"tokens\": {\n    \"refresh\": \"<refresh_token>\",\n    \"access\": \"<access_token>\"\n  },\n  \"user_info\": {\n    \"username\": \"citizen_user\",\n    \"user_type\": \"citizen\",\n    \"email\": \"citizen@example.com\",\n    \"national_id\": \"12345678901234\",\n    \"role\": \"citizen\",\n    \"department\": null,\n    \"region\": null,\n    \"phone_number\": \"01012345678\"\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/logout/",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refresh\": \"{{refresh_token}}\"\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "Reset Content",
+              "status": "Reset Content",
+              "code": 205,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"تم تسجيل الخروج بنجاح\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/refresh/",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refresh\": \"{{refresh_token}}\"\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "OK",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"access\": \"<new_access_token>\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Registration Data",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/registration-data/"
+          },
+          "response": [
+            {
+              "name": "OK",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"departments\": [\n    {\n      \"id\": 1,\n      \"department_name\": \"Roads\"\n    }\n  ],\n  \"regions\": [\n    {\n      \"id\": 1,\n      \"region_name\": \"Cairo\"\n    }\n  ],\n  \"roles\": [\n    {\n      \"id\": \"technician\",\n      \"name\": \"Technician\"\n    }\n  ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Departments",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/departments/"
+          },
+          "response": [
+            {
+              "name": "OK",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 1,\n    \"department_name\": \"Roads\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Change Password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/change-password/",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"old_password\": \"OldPass123!\",\n  \"new_password\": \"NewPass123!\"\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "OK",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"تم تغيير كلمة المرور بنجاح\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Profile Update",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/profile-update/",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"first_name\": \"Ali\",\n  \"last_name\": \"Hassan\",\n  \"email\": \"ali@example.com\",\n  \"phone_number\": \"01011112222\",\n  \"birth_date\": \"1995-05-20\"\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "OK",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"تم تحديث البيانات بنجاح\",\n  \"user_data\": {\n    \"first_name\": \"Ali\",\n    \"last_name\": \"Hassan\",\n    \"email\": \"ali@example.com\",\n    \"phone_number\": \"01011112222\",\n    \"birth_date\": \"1995-05-20\"\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Forgot Password - Request Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/forgot-password/",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"citizen@example.com\"\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "OK",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"OK\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Forgot Password - Validate Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/forgot-password/validate_token/",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"token\": \"123456\"\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "OK",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"OK\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Forgot Password - Confirm",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/forgot-password/confirm/",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"token\": \"123456\",\n  \"password\": \"NewPass123!\"\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "OK",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"OK\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Incidents",
+      "item": [
+        {
+          "name": "List Incidents",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/incidents/?status=1&assigned_to__employee_profile__department=1&created_at__date__gte=2026-01-01&created_at__date__lte=2026-12-31&priority=HIGH&incident_type=1&search=water&ordering=-created_at"
+          },
+          "response": [
+            {
+              "name": "OK",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 1,\n    \"title\": \"Water leak\",\n    \"description\": \"Pipe leak in street\",\n    \"location\": \"Nasr City\",\n    \"created_at\": \"2026-04-16T10:00:00Z\",\n    \"status\": \"NEW\",\n    \"department\": null,\n    \"priority\": \"HIGH\",\n    \"incident_type\": \"Water\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Incident Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/incidents/{{incident_id}}/"
+          },
+          "response": [
+            {
+              "name": "OK",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 1,\n  \"title\": \"Water leak\",\n  \"description\": \"Pipe leak in street\",\n  \"location\": \"Nasr City\",\n  \"created_at\": \"2026-04-16T10:00:00Z\",\n  \"resolved_at\": null,\n  \"status\": \"NEW\",\n  \"priority\": \"High\",\n  \"department\": null,\n  \"incident_type\": \"Water\",\n  \"latitude\": \"30.044420\",\n  \"longitude\": \"31.235712\",\n  \"images\": [\n    {\n      \"id\": 10,\n      \"incident\": 1,\n      \"image\": \"http://127.0.0.1:8000/media/incident_images/photo.jpg\",\n      \"uploaded_at\": \"2026-04-16T10:10:00Z\"\n    }\n  ],\n  \"verification_image\": null,\n  \"verification_comment\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "Create Incident",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/incidents/create/",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Road damage\",\n  \"description\": \"Large pothole near school\",\n  \"latitude\": \"30.044420\",\n  \"longitude\": \"31.235712\",\n  \"location\": \"Downtown\",\n  \"priority\": \"HIGH\",\n  \"incident_type\": 1\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "Created",
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": 1,\n    \"citizen\": 7,\n    \"title\": \"Road damage\",\n    \"description\": \"Large pothole near school\",\n    \"latitude\": \"30.044420\",\n    \"longitude\": \"31.235712\",\n    \"location\": \"Downtown\",\n    \"status\": 1,\n    \"assigned_to\": null,\n    \"priority\": \"HIGH\",\n    \"incident_type\": 1,\n    \"resolved_at\": null,\n    \"created_at\": \"2026-04-16T10:00:00Z\"\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "My Incidents",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/incidents/my/"
+          },
+          "response": [
+            {
+              "name": "OK",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 1,\n    \"citizen\": 7,\n    \"title\": \"Road damage\",\n    \"description\": \"Large pothole near school\",\n    \"latitude\": \"30.044420\",\n    \"longitude\": \"31.235712\",\n    \"location\": \"Downtown\",\n    \"status\": 1,\n    \"assigned_to\": null,\n    \"priority\": \"HIGH\",\n    \"incident_type\": 1,\n    \"resolved_at\": null,\n    \"created_at\": \"2026-04-16T10:00:00Z\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Upload Incident Image",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/incidents/{{incident_id}}/images/",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": ""
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Created",
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 10,\n  \"incident\": 1,\n  \"image\": \"http://127.0.0.1:8000/media/incident_images/photo.jpg\",\n  \"uploaded_at\": \"2026-04-16T10:10:00Z\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Dashboard",
+      "item": [
+        {
+          "name": "Dashboard Stats",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/incidents/stats/"
+          },
+          "response": [
+            {
+              "name": "OK",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"total\": 12,\n    \"new\": 3,\n    \"assigned\": 2,\n    \"in_progress\": 4,\n    \"completed\": 3,\n    \"resolved_today\": 1\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Weekly Stats",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/incidents/weekly/"
+          },
+          "response": [
+            {
+              "name": "OK",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": [\n    {\n      \"day\": \"2026-04-14\",\n      \"count\": 4\n    },\n    {\n      \"day\": \"2026-04-15\",\n      \"count\": 2\n    }\n  ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Recent Incidents",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/incidents/recent/"
+          },
+          "response": [
+            {
+              "name": "OK",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": [\n    {\n      \"id\": 1,\n      \"date\": \"2026-04-16T10:00:00Z\",\n      \"status\": \"NEW\",\n      \"department\": \"Roads\"\n    }\n  ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Incidents By Department",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/incidents/by-department/"
+          },
+          "response": [
+            {
+              "name": "OK",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": [\n    {\n      \"department\": \"Roads\",\n      \"count\": 5\n    }\n  ]\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Workflow",
+      "item": [
+        {
+          "name": "Workflow Board",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/incidents/workflow/"
+          },
+          "response": [
+            {
+              "name": "OK",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"NEW\": {\n      \"count\": 1,\n      \"incidents\": [\n        {\n          \"id\": 1,\n          \"title\": \"Water leak\",\n          \"description\": \"Pipe leak in street\",\n          \"location\": \"Nasr City\",\n          \"created_at\": \"2026-04-16T10:00:00Z\",\n          \"status\": \"NEW\",\n          \"department\": null,\n          \"priority\": \"HIGH\",\n          \"incident_type\": \"Water\"\n        }\n      ]\n    }\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Accept Incident",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/incidents/{{incident_id}}/accept/"
+          },
+          "response": [
+            {
+              "name": "OK",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Accepted\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Change Incident Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/incidents/{{incident_id}}/change-status/",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"IN_PROGRESS\"\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "OK",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Updated\",\n  \"incident_id\": 1,\n  \"new_status\": \"IN_PROGRESS\",\n  \"resolved_at\": null\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "History",
+      "item": [
+        {
+          "name": "Incident History",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/incidents/history/?search=Nasr&date=2026-04-16&type=1&priority=HIGH&page=1"
+          },
+          "response": [
+            {
+              "name": "OK",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 1,\n  \"next\": null,\n  \"previous\": null,\n  \"results\": {\n    \"success\": true,\n    \"stats\": {\n      \"total\": 1,\n      \"most_common_type\": \"Water\",\n      \"avg_resolution_time\": \"1 day, 2:00:00\"\n    },\n    \"data\": [\n      {\n        \"id\": 1,\n        \"date\": \"2026-04-15T10:00:00Z\",\n        \"type\": \"Water\",\n        \"status\": \"COMPLETED\",\n        \"priority\": \"HIGH\",\n        \"location\": \"Nasr City\",\n        \"resolution_time\": \"1 day, 2:00:00\"\n      }\n    ]\n  }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Notifications",
+      "item": [
+        {
+          "name": "List Notifications",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/incidents/notifications/?page=1"
+          },
+          "response": [
+            {
+              "name": "OK",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"count\": 1,\n    \"next\": null,\n    \"previous\": null,\n    \"results\": [\n      {\n        \"id\": 1,\n        \"title\": \"Status updated\",\n        \"message\": \"Incident #1 is now IN_PROGRESS.\",\n        \"is_read\": false,\n        \"created_at\": \"2026-04-16T10:30:00Z\"\n      }\n    ]\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Mark Notification Read",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/incidents/notifications/{{notification_id}}/read/"
+          },
+          "response": [
+            {
+              "name": "OK",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": 1,\n    \"title\": \"Status updated\",\n    \"message\": \"Incident #1 is now IN_PROGRESS.\",\n    \"is_read\": true,\n    \"created_at\": \"2026-04-16T10:30:00Z\"\n  }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Metadata",
+      "item": [
+        {
+          "name": "Incident Statuses",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/incidents/statuses/"
+          },
+          "response": [
+            {
+              "name": "OK",
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 1,\n    \"name\": \"NEW\"\n  },\n  {\n    \"id\": 2,\n    \"name\": \"ASSIGNED\"\n  },\n  {\n    \"id\": 3,\n    \"name\": \"IN_PROGRESS\"\n  },\n  {\n    \"id\": 4,\n    \"name\": \"REVIEW\"\n  },\n  {\n    \"id\": 5,\n    \"name\": \"COMPLETED\"\n  }\n]"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

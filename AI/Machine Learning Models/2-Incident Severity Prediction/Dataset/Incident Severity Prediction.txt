@@ -1,0 +1,15 @@
+🧠 Rules بسيطة:
+
+لو:
+
+trust_score منخفض
+
+image_authenticity ضعيف
+→ severity تقل
+
+لو:
+
+reports_nearby عالية
+
+anomaly_score عالي
+→ severity تزيد
