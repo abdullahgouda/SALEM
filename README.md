@@ -210,8 +210,8 @@ Things we'd like to add if we keep working on this:
 
 ## Team
 
-- Amer Mohamed
 - Abdallah Farag
+- Amer Mohamed
 - Esraa Magdy
 - Hassan Tarek
 - Micheal Salama
