@@ -1,214 +1,241 @@
+<div align="center">
+
 # SALEM
+**Smart AI-Powered Local Emergency Management**
 
-Smart AI-Powered Location & Excavation Management Ecosystem
+[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white)](https://python.org)
+[![Django](https://img.shields.io/badge/Django-5.0-092E20?style=flat-square&logo=django&logoColor=white)](https://djangoproject.com)
+[![DRF](https://img.shields.io/badge/Django%20REST%20Framework-red?style=flat-square&logo=django&logoColor=white)](https://www.django-rest-framework.org)
+[![JWT](https://img.shields.io/badge/JWT-Auth-000000?style=flat-square&logo=jsonwebtokens&logoColor=white)](https://jwt.io)
+[![Flutter](https://img.shields.io/badge/Flutter-Mobile-02569B?style=flat-square&logo=flutter&logoColor=white)](https://flutter.dev)
+[![React](https://img.shields.io/badge/React-Dashboard-61DAFB?style=flat-square&logo=react&logoColor=black)](https://react.dev)
+[![FastAPI](https://img.shields.io/badge/FastAPI-AI%20Services-009688?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
 
-SALEM is a full-scale digital ecosystem for managing location- and excavation-related incidents through a connected architecture that includes a backend API, a dashboard, a mobile application, and AI-powered intelligence. I designed this project as a practical solution for turning citizen reports into actionable operational workflows with speed, structure, and real-time visibility.
+</div>
 
-## Why I Built This
+---
 
-This system was created to solve a real operational problem: when incidents are reported by citizens, they often lack a consistent, intelligent, and trackable process for follow-up. SALEM brings together multiple layers of the solution into one connected platform:
+SALEM is a graduation project we built to solve a real problem: when citizens report public incidents, there's usually no reliable, trackable process to make sure anything actually gets done about it. We wanted to change that.
 
-- a backend API to handle authentication, business logic, and incident management
-- a dashboard for monitoring, reviewing, and coordinating reports
-- a mobile application for citizens and field users to interact with the system
-- AI models to support duplicate detection, trust evaluation, severity prediction, priority recommendation, and image analysis
+The system connects citizens, field employees, and government operators in one platform. A citizen reports an issue from their phone. The backend runs it through several AI models. The right department gets notified. An employee is assigned. The citizen gets updates. That's the loop we built — and we tried to make every part of it work properly, not just look good in a demo.
 
-## What This Project Includes
+---
 
-### Core Features
+## What's inside
 
-- Citizen and employee authentication
-- Role-based access for different user types
-- Department and employee management
-- Incident creation, assignment, review, and completion flows
-- Notifications for operators and assigned teams
-- Media upload support for before/after incident evidence
-- AI-driven analysis for duplicate detection, trust scoring, severity classification, road damage detection, and image authenticity checks
-- Password reset and OTP verification flow
-- End-to-end workflow support across backend, dashboard, and mobile interfaces
+The project is split into four parts that all talk to each other:
 
-### Technical Highlights
+- **Backend API** — Django + DRF, handles everything: auth, incidents, departments, notifications, and calling the AI services
+- **Dashboard** — React.js interface for operators and admins to monitor and manage what's happening
+- **Mobile App** — Flutter app for citizens to submit reports and employees to handle them in the field
+- **AI Services** — a set of FastAPI microservices that do the actual intelligent analysis
 
-- Built with Django 5 and Django REST Framework
-- JWT-based authentication for secure API access
-- Custom validation and model constraints for role-specific business rules
-- REST API endpoints for the full incident lifecycle
-- Integration with external AI services through HTTP API calls
-- Media handling for evidence-based reporting
-- Email delivery and transactional messaging support through Brevo
+---
 
-## System Overview
+## How it works
 
-SALEM is not just a backend project. It is a complete intelligent platform composed of several connected components that work together as one ecosystem:
-
-- Backend API: manages data, business rules, authentication, and integrations
-- Dashboard: gives operators and departments a way to review and manage incidents
-- Mobile App: enables citizens and field users to report issues and interact with the system
-- AI Models: provide automated insights that improve incident prioritization and decision-making
-
-## Architecture Overview
-
-The repository is organized around a clean backend structure that supports the broader system:
-
-```text
-backend/         # Django project settings and routing
-Home/             # Additional app for project-level endpoints
-media/            # Uploaded incident images and media files
-postman/          # API collection for testing and development
-staticfiles/     # Collected static assets
-users/            # Main app containing models, views, services, and API logic
+```
+Citizen submits a report (image + location + description)
+        │
+        ▼
+Backend validates and triggers AI pipeline
+  ├─ Is the image real?
+  ├─ Has this been reported before?
+  ├─ What category does this fall under?
+  ├─ How severe is it?
+  └─ How trustworthy is this reporter?
+        │
+        ▼
+Incident is created and appears on the dashboard
+        │
+        ▼
+Operator assigns it to the right department + employee
+        │
+        ▼
+Employee works on it, updates status from the field
+        │
+        ▼
+Citizen gets notified when it's resolved
 ```
 
-## Main Functional Flow
+Incident statuses: `new` → `assigned` → `in_progress` → `review` → `completed` (or `forwarded`)
 
-1. A citizen submits a report with location, description, and image evidence.
-2. The backend validates the report and performs AI-based analysis.
-3. The system detects duplicates, estimates trustworthiness, and evaluates severity.
-4. The incident progresses through statuses such as new, assigned, in progress, review, forwarded, or completed.
-5. Operators, departments, and connected interfaces receive updates and can act on the report.
+---
+
+## AI Models
+
+This is the part we're most proud of. Every report goes through a pipeline of models before it even reaches an operator.
+
+| Model | What it does | Tech |
+|-------|-------------|------|
+| **Trust Score** | Scores how reliable this citizen's reports tend to be | XGBoost / Logistic Regression — 85.98% accuracy |
+| **Severity Prediction** | Low / Medium / High / Critical classification | Random Forest — 78.07% on 6,000 samples |
+| **Image Authenticity** | Catches fake or manipulated images | CNN (TensorFlow + Keras) |
+| **Duplicate Detection** | Finds if the same image was submitted before | ResNet-50 + cosine similarity |
+| **Object Detection** | Identifies road damage and scene context | YOLOv8 |
+| **NLP Classification** | Reads the Arabic description and categorizes the incident | AraBERT |
+| **Semantic Similarity** | Catches duplicate reports that are worded differently | Sentence Transformers |
+| **ETA Prediction** | Estimates how long resolution will take | Gradient Boosting |
+
+Each model runs as its own FastAPI service so we can update or scale them independently.
+
+---
 
 ## Tech Stack
 
-- Python 3.10+
-- Django 5.0
-- Django REST Framework
-- Simple JWT
-- SQLite (default development database)
-- Pillow
-- Requests
-- CORS headers
-- PostgreSQL-ready structure for future production deployment
+**Backend**
+- Python 3.10+, Django 5.0, Django REST Framework
+- Simple JWT — access tokens (15 min) + refresh tokens (7 days)
+- SQLite for development, PostgreSQL-ready for production
+- Brevo for transactional email and notifications
+
+**AI Services**
+- FastAPI + Uvicorn
+- Scikit-learn, XGBoost, TensorFlow/Keras
+- Ultralytics YOLOv8
+- AraBERT, Hugging Face Transformers, Sentence Transformers
+
+**Frontend & Mobile**
+- React.js, Tailwind CSS, Recharts, React Leaflet, Framer Motion
+- Flutter, Dio, Firebase Cloud Messaging, Google Maps
+
+---
 
 ## Project Structure
 
-```text
-users/                # Authentication, accounts, incidents, departments, notifications
-users/services/      # AI integration services for duplicate detection, trust scoring, severity, priority, and image analysis
-backend/              # Core Django project configuration
-media/                # Files uploaded by users
-postman/              # API testing collection
+```
+SALEM/
+├── AI/                       # AI models and microservices (FastAPI)
+│   ├── trust_score/
+│   ├── severity/
+│   ├── duplicate_detection/
+│   ├── image_authenticity/
+│   └── nlp/
+├── Backend/                  # Django REST API
+│   ├── backend/              # Django settings and URL routing
+│   ├── users/                # Auth, incidents, departments, notifications
+│   │   └── services/         # AI service integration layer
+│   ├── media/                # Uploaded incident images
+│   └── postman/              # Postman collection for API testing
+├── Frontend/                 # React.js dashboard
+└── MobileApplication/        # Flutter app (citizen + employee)
 ```
 
-## Installation
+---
 
-### 1. Clone the repository
+## Getting Started
 
 ```bash
-git clone <your-repository-url>
+git clone https://github.com/abdullahgouda/SALEM.git
 cd SALEM
 ```
 
-### 2. Create and activate a virtual environment
-
+**Backend**
 ```bash
+cd Backend
 python -m venv venv
-source venv/bin/activate
-```
-
-On Windows PowerShell:
-
-```powershell
-venv\Scripts\Activate.ps1
-```
-
-### 3. Install dependencies
-
-```bash
+source venv/bin/activate        # Windows: venv\Scripts\Activate.ps1
 pip install -r requirements.txt
-```
-
-### 4. Apply migrations
-
-```bash
 python manage.py migrate
-```
-
-### 5. Run the development server
-
-```bash
 python manage.py runserver
 ```
 
-The application will be available at:
-
-```text
-http://127.0.0.1:8000/
+**Frontend (Dashboard)**
+```bash
+cd Frontend
+npm install
+npm start
 ```
 
-## API Overview
-
-The backend exposes REST endpoints under the following base route:
-
-```text
-/api/
+**Mobile App**
+```bash
+cd MobileApplication
+flutter pub get
+flutter run
 ```
 
-Some of the main routes include:
+**AI Services** — each model inside `AI/` is a standalone FastAPI service. Navigate into the relevant folder and run:
+```bash
+uvicorn main:app --reload
+```
 
-- `/api/citizin/signup/`
-- `/api/citizin/login/`
-- `/api/employee/login/`
-- `/api/incidence/citizin/create/`
-- `/api/incidence/`
-- `/api/department/`
-- `/api/employee/`
+---
 
-A Postman collection is included in the [postman](postman) folder for quick testing.
+## API
 
-## Authentication & Security
+All routes live under `/api/`. A Postman collection is in the [`Backend/postman/`](Backend/postman) folder.
 
-The API uses JWT-based authentication and includes structured request handling for citizen and employee workflows. For production deployment, I strongly recommend moving sensitive values such as secret keys, email credentials, and API tokens into environment variables.
+**Auth**
+```
+POST  /api/citizin/signup/
+POST  /api/citizin/login/
+POST  /api/employee/login/
+POST  /api/auth/refresh/
+```
 
-## AI Integration
+**Incidents**
+```
+POST  /api/incidence/citizin/create/
+GET   /api/incidence/
+PUT   /api/incidence/{id}/status/
+```
 
-One of the strongest parts of this system is the AI layer. The backend connects to external AI services to support:
+**Management**
+```
+GET   /api/department/
+GET   /api/employee/
+GET   /api/statistics/heatmap/
+```
 
-- duplicate report detection
-- trust score prediction
-- severity estimation
-- priority recommendation
-- road damage detection from images
-- image authenticity analysis
+**AI Endpoints**
+```
+POST  /api/ai/trust-score/predict/
+POST  /api/ai/severity/predict/
+POST  /api/ai/image-authenticity/predict/
+POST  /api/ai/duplicate-detection/check/
+POST  /api/ai/nlp/classify/
+```
 
-This makes the platform more than a simple CRUD backend; it becomes an intelligent incident management system.
+---
 
-## What I Focused On While Building It
+## Authentication
 
-I paid special attention to the parts that make a real-world system reliable and scalable:
+JWT with role-based access. Three roles: `Citizen`, `Employee`, `Administrator` — each with its own permission class enforced at the view level.
 
-- clean API design for frontend and mobile integration
-- role-based logic for different user types
-- reliable incident status transitions
-- media handling for evidence-based reporting
-- extensibility for future dashboards, analytics, and automation
-- a strong foundation for production-level expansion and maintenance
+> Before deploying to production, move `SECRET_KEY`, email credentials, and AI service tokens into environment variables.
 
-## Testing
+---
 
-Run the test suite with:
+## Tests
 
 ```bash
 python manage.py test
 ```
 
-## Future Improvements
+---
 
-Possible next steps for this project include:
+## What's next
 
-- deeper dashboard analytics and reporting
-- broader mobile experience optimization
-- stronger workflow automation
-- SMS and push notification support
-- Docker and CI/CD deployment setup
+Things we'd like to add if we keep working on this:
 
-## Contributing
+- Docker setup and a proper CI/CD pipeline
+- SMS notifications
+- IoT sensor integration for automated reporting
+- PDF report exports from the dashboard
+- Live camera feed with YOLOv8 for automated detection
 
-If you want to contribute, feel free to fork the repository, create a feature branch, and submit a pull request.
+---
+
+## Team
+
+- Abdallah Farag
+- Amer Mohamed
+- Esraa Magdy
+- Hassan Tarek
+- Micheal Salama
+
+---
 
 ## License
 
-No license has been specified for this repository yet. If you plan to publish it publicly, consider adding an open-source license such as MIT or Apache 2.0.
-
-## Contact
-
-If you want to discuss this project, improve it, or collaborate further, feel free to reach out through the repository owner.
+No license yet. If you're making this public, [MIT](https://choosealicense.com/licenses/mit/) is a good starting point.
