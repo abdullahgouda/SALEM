@@ -25,10 +25,10 @@ The system connects citizens, field employees, and government operators in one p
 
 The project is split into four parts that all talk to each other:
 
-- **Backend API** — Django + DRF, handles everything: auth, incidents, departments, notifications, and calling the AI services
-- **Dashboard** — React.js interface for operators and admins to monitor and manage what's happening
-- **Mobile App** — Flutter app for citizens to submit reports and employees to handle them in the field
-- **AI Services** — a set of FastAPI microservices that do the actual intelligent analysis
+- **[Backend](./Backend)** — Django + DRF, handles everything: auth, incidents, departments, notifications, and calling the AI services
+- **[Frontend](./Frontend)** — React.js dashboard for operators and admins to monitor and manage what's happening
+- **[MobileApplication](./MobileApplication)** — Flutter app for citizens to submit reports and employees to handle them in the field
+- **[AI](./AI)** — a set of FastAPI microservices that do the actual intelligent analysis
 
 ---
 
@@ -71,7 +71,7 @@ This is the part we're most proud of. Every report goes through a pipeline of mo
 | **Trust Score** | Scores how reliable this citizen's reports tend to be | XGBoost / Logistic Regression — 85.98% accuracy |
 | **Severity Prediction** | Low / Medium / High / Critical classification | Random Forest — 78.07% on 6,000 samples |
 | **Image Authenticity** | Catches fake or manipulated images | CNN (TensorFlow + Keras) |
-| **Duplicate Detection** | Finds if the same image was submitted before | ResNet-50 + cosine similarity |
+| **Duplicate Detection** | Finds if the same image was submitted before | Feature extraction + cosine similarity |
 | **Object Detection** | Identifies road damage and scene context | YOLOv8 |
 | **NLP Classification** | Reads the Arabic description and categorizes the incident | AraBERT |
 | **Semantic Similarity** | Catches duplicate reports that are worded differently | Sentence Transformers |
@@ -85,7 +85,7 @@ Each model runs as its own FastAPI service so we can update or scale them indepe
 
 **Backend**
 - Python 3.10+, Django 5.0, Django REST Framework
-- Simple JWT — access tokens (15 min) + refresh tokens (7 days)
+- Simple JWT for authentication
 - SQLite for development, PostgreSQL-ready for production
 - Brevo for transactional email and notifications
 
@@ -96,8 +96,8 @@ Each model runs as its own FastAPI service so we can update or scale them indepe
 - AraBERT, Hugging Face Transformers, Sentence Transformers
 
 **Frontend & Mobile**
-- React.js, Tailwind CSS, Recharts, React Leaflet, Framer Motion
-- Flutter, Dio, Firebase Cloud Messaging, Google Maps
+- React.js, Tailwind CSS, Recharts, React Leaflet
+- Flutter + Google Maps
 
 ---
 
@@ -105,20 +105,10 @@ Each model runs as its own FastAPI service so we can update or scale them indepe
 
 ```
 SALEM/
-├── AI/                       # AI models and microservices (FastAPI)
-│   ├── trust_score/
-│   ├── severity/
-│   ├── duplicate_detection/
-│   ├── image_authenticity/
-│   └── nlp/
-├── Backend/                  # Django REST API
-│   ├── backend/              # Django settings and URL routing
-│   ├── users/                # Auth, incidents, departments, notifications
-│   │   └── services/         # AI service integration layer
-│   ├── media/                # Uploaded incident images
-│   └── postman/              # Postman collection for API testing
-├── Frontend/                 # React.js dashboard
-└── MobileApplication/        # Flutter app (citizen + employee)
+├── AI/                   # AI models and FastAPI microservices
+├── Backend/              # Django REST API
+├── Frontend/             # React.js dashboard
+└── MobileApplication/    # Flutter app (citizen + employee)
 ```
 
 ---
@@ -134,18 +124,20 @@ cd SALEM
 ```bash
 cd Backend
 python -m venv venv
-source venv/bin/activate        # Windows: venv\Scripts\Activate.ps1
+source venv/bin/activate
+# Windows: venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 python manage.py migrate
 python manage.py runserver
 ```
 
-**Frontend (Dashboard)**
+**Frontend**
 ```bash
 cd Frontend
 npm install
 npm start
 ```
+> Check `Frontend/` for any additional setup steps or environment variables needed.
 
 **Mobile App**
 ```bash
@@ -154,53 +146,42 @@ flutter pub get
 flutter run
 ```
 
-**AI Services** — each model inside `AI/` is a standalone FastAPI service. Navigate into the relevant folder and run:
-```bash
-uvicorn main:app --reload
-```
+**AI Services**
+
+Each model inside `AI/` is a standalone FastAPI service. Navigate into the relevant subfolder and follow the setup instructions there.
 
 ---
 
 ## API
 
-All routes live under `/api/`. A Postman collection is in the [`Backend/postman/`](Backend/postman) folder.
+All routes live under `/api/`. A Postman collection is included in the `Backend/` folder for testing the full API.
 
 **Auth**
 ```
 POST  /api/citizin/signup/
 POST  /api/citizin/login/
 POST  /api/employee/login/
-POST  /api/auth/refresh/
 ```
 
 **Incidents**
 ```
 POST  /api/incidence/citizin/create/
 GET   /api/incidence/
-PUT   /api/incidence/{id}/status/
 ```
 
 **Management**
 ```
 GET   /api/department/
 GET   /api/employee/
-GET   /api/statistics/heatmap/
 ```
 
-**AI Endpoints**
-```
-POST  /api/ai/trust-score/predict/
-POST  /api/ai/severity/predict/
-POST  /api/ai/image-authenticity/predict/
-POST  /api/ai/duplicate-detection/check/
-POST  /api/ai/nlp/classify/
-```
+> The full list of endpoints is in the Postman collection.
 
 ---
 
 ## Authentication
 
-JWT with role-based access. Three roles: `Citizen`, `Employee`, `Administrator` — each with its own permission class enforced at the view level.
+JWT-based with role-based access control. Three roles: `Citizen`, `Employee`, `Administrator` — each with its own permission class enforced at the view level.
 
 > Before deploying to production, move `SECRET_KEY`, email credentials, and AI service tokens into environment variables.
 
@@ -209,6 +190,7 @@ JWT with role-based access. Three roles: `Citizen`, `Employee`, `Administrator` 
 ## Tests
 
 ```bash
+cd Backend
 python manage.py test
 ```
 
@@ -228,8 +210,8 @@ Things we'd like to add if we keep working on this:
 
 ## Team
 
-- Abdallah Farag
 - Amer Mohamed
+- Abdallah Farag
 - Esraa Magdy
 - Hassan Tarek
 - Micheal Salama
