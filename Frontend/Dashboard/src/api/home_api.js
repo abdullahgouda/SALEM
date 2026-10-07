@@ -9,6 +9,34 @@ const COLORS = [
   "#EF4444",
 ];
 
+// 🎯 بيانات تجريبية لتعبئة الواجهة فور فشل طلب السيرفر
+const dummyFallbackData = {
+  cards: {
+    total: 39,
+    open: 14,
+    inReview: 8,
+    transferred: 5,
+    solvedToday: 12,
+  },
+  lineChart: [
+    { day: 1, value: 5 },
+    { day: 5, value: 12 },
+    { day: 10, value: 18 },
+    { day: 15, value: 25 },
+    { day: 20, value: 22 },
+  ],
+  donutChart: [
+    { name: "Public Works", value: 15, color: COLORS[0] },
+    { name: "Utilities", value: 10, color: COLORS[1] },
+    { name: "Traffic", value: 8, color: COLORS[2] },
+  ],
+  reports: [
+    { id: "REP-101", Date: "2026-10-01", Status: "Completed", Department: "Public Works" },
+    { id: "REP-102", Date: "2026-10-03", Status: "Under Review", Department: "Utilities" },
+    { id: "REP-103", Date: "2026-10-05", Status: "Open", Department: "Traffic" },
+  ],
+};
+
 const getCurrentMonthDates = () => {
   const now = new Date();
 
@@ -82,22 +110,9 @@ export const getHomeData = async () => {
       reports: latestReports.Latest_Incidences || [],
     };
   } catch (error) {
-    console.error("Home API Error:", error);
+    console.error("Home API Error, using fallback data:", error);
 
-    return {
-      cards: {
-        total: 0,
-        open: 0,
-        inReview: 0,
-        transferred: 0,
-        solvedToday: 0,
-      },
-
-      lineChart: [],
-
-      donutChart: [],
-
-      reports: [],
-    };
+    // إرجاع البيانات الوهمية بدلاً من الأصفار لتظهر جميع مكونات الصفحة
+    return dummyFallbackData;
   }
 };

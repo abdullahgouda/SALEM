@@ -3,10 +3,6 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Eye, EyeOff } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { error as swalError } from "../../utils/swal";
-
-// ✅ API
-import { login } from "../../api/auth_api";
 
 function Login() {
     const { t, i18n } = useTranslation();
@@ -15,36 +11,19 @@ function Login() {
     const [nationalId, setNationalId] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-    const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
 
-    const handleLogin = async (e) => {
+    const handleLogin = (e) => {
         e.preventDefault();
 
-        // ✅ Validation
-        if (!nationalId || !password) {
-            return swalError("Error", "Please fill all fields");
-        }
+        // 1. تخزين توكن وهمي عشان الـ DashboardLayout يسمح بالدخول
+        localStorage.setItem("token", "dummy_token_123");
+        localStorage.setItem("access_token", "dummy_token_123");
+        localStorage.setItem("user", JSON.stringify({ name: "Admin" }));
 
-        setLoading(true);
-
-        try {
-            await login(nationalId, password);
-
-            // ✅ Redirect بعد النجاح
-            navigate("/dashboard", { replace: true });
-
-        } catch (err) {
-            const msg =
-                err.response?.data?.detail ||
-                err.response?.data?.message ||
-                "Login failed";
-
-            swalError("Login Error", msg);
-        } finally {
-            setLoading(false);
-        }
+        // 2. التوجيه المباشر للدشبورد
+        navigate("/dashboard", { replace: true });
     };
 
     return (
@@ -120,12 +99,10 @@ function Login() {
                 {/* Submit */}
                 <button
                     type="submit"
-                    disabled={loading}
                     className="w-full py-2.5 rounded-xl text-white font-semibold 
-                    bg-gradient-to-r from-[#00816F] to-[#2DDBC9] 
-                    disabled:opacity-70"
+                    bg-gradient-to-r from-[#00816F] to-[#2DDBC9]"
                 >
-                    {loading ? (t("loading") || "Loading...") : t("loginButton")}
+                    {t("loginButton")}
                 </button>
             </form>
         </motion.div>

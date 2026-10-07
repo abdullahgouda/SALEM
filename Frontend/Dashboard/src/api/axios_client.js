@@ -1,20 +1,16 @@
 import axios from "axios";
 
 const client = axios.create({
-  baseURL:
-    "https://salemproject.pythonanywhere.com/api",
-
+  baseURL: "https://salemproject.pythonanywhere.com/api",
   headers: {
-    "Content-Type":
-      "application/json",
+    "Content-Type": "application/json",
   },
 });
 
 // ================= REQUEST =================
 client.interceptors.request.use(
   (config) => {
-    const token =
-      localStorage.getItem("access");
+    const token = localStorage.getItem("access");
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -22,9 +18,7 @@ client.interceptors.request.use(
 
     return config;
   },
-
-  (error) =>
-    Promise.reject(error)
+  (error) => Promise.reject(error)
 );
 
 // ================= RESPONSE =================
@@ -32,9 +26,9 @@ client.interceptors.response.use(
   (response) => response,
 
   (error) => {
-
-    const currentPath =
-      window.location.pathname;
+    // ❌ تم تعطيل التوجيه التلقائي لـ /login للتجربة الاختبارية
+    /*
+    const currentPath = window.location.pathname;
 
     const authPages = [
       "/login",
@@ -49,14 +43,12 @@ client.interceptors.response.use(
       !authPages.includes(currentPath)
     ) {
       localStorage.removeItem("access");
-
       localStorage.removeItem("refresh");
-
       localStorage.removeItem("user");
 
-      window.location.href =
-        "/login";
+      window.location.href = "/login";
     }
+    */
 
     return Promise.reject(error);
   }

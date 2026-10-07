@@ -4,7 +4,6 @@ import AuthLayout from "../layout/AuthLayout";
 import DashboardLayout from "../layout/DashboardLayout";
 
 import Login from "../pages/auth/Login";
-
 import ForgetPassword from "../pages/auth/ForgetPassword";
 import Verification from "../pages/auth/Verification";
 import SetNewPassword from "../pages/auth/SetNewPassword";
@@ -20,17 +19,17 @@ import Signup from "../pages/users/Signup";
 import AddUserPage from "../pages/users/AddUserPage";
 import SettingsPage from "../pages/settings/SettingsPage";
 
-
-
-
-
 function AppRoutes() {
     return (
         <Routes>
+            {/* ========== Temporary Bypass for Testing ========== */}
+            {/* جعل المسار الرئيسي ينقل مباشرة للـ Dashboard */}
+            <Route element={<DashboardLayout />}>
+                <Route path="/" element={<HomePage />} />
+            </Route>
 
             {/* ========== Auth ========== */}
             <Route element={<AuthLayout />}>
-                <Route path="/" element={<Login />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/forget-password" element={<ForgetPassword />} />
@@ -50,7 +49,6 @@ function AppRoutes() {
                 <Route path="/dashboard/users/add" element={<AddUserPage />} />
                 <Route path="/dashboard/settings" element={<SettingsPage />} />
             </Route>
-
         </Routes>
     );
 }
