@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { assets } from '../assets/assets';
 import { useTranslation } from "react-i18next";
 
+// تحديد رابط الـ Dashboard (بورت 5174 افتراضياً للـ local)
+const DASHBOARD_URL = import.meta.env.VITE_DASHBOARD_URL || "http://localhost:5174";
+
 const Navbar = ({ changeLanguage }) => {
 
     const { t, i18n } = useTranslation();
-
     const [showMobileMenu, setMobileMenu] = useState(false);
 
     useEffect(() => {
@@ -15,10 +17,15 @@ const Navbar = ({ changeLanguage }) => {
     // Lang
     const nextLang = i18n.language === "ar" ? "EN" : "AR";
 
-
     const toggleLang = () => {
         const newLang = i18n.language === "ar" ? "en" : "ar";
         changeLanguage(newLang); 
+    };
+
+    // دالة التوجيه المباشر للـ Dashboard
+    const handleGoToLogin = (e) => {
+        e.preventDefault();
+        window.location.href = `${DASHBOARD_URL}/login`;
     };
 
     return (
@@ -28,7 +35,7 @@ const Navbar = ({ changeLanguage }) => {
                 <img src={assets.logow} className="w-24" alt="logo" />
 
                 {/* Links */}
-                <ul className="hidden md:flex gap-7 text-white">
+                <ul className="hidden md:flex gap-7 text-white items-center">
                     <a href="#Home" className="hover:text-gray-300">{t("nav_home")}</a>
                     <a href="#LiveState" className="hover:text-gray-300">{t("nav_live")}</a>
                     <a href="#Services" className="hover:text-gray-300">{t("nav_services")}</a>
@@ -36,11 +43,19 @@ const Navbar = ({ changeLanguage }) => {
                     <a href="#Contact" className="hover:text-gray-300">{t("nav_contact")}</a>
                 </ul>
 
-                {/* Lang Button */}
-                <button onClick={toggleLang}
-                    className="hidden md:block px-6 py-2 text-white hover:text-gray-300">
-                    {nextLang}
-                </button>
+                {/* Actions (Lang + Login) - Desktop */}
+                <div className="hidden md:flex items-center gap-4">
+                    <button onClick={toggleLang}
+                        className="px-4 py-2 text-white hover:text-gray-300 transition">
+                        {nextLang}
+                    </button>
+
+                    <button 
+                        onClick={handleGoToLogin}
+                        className="px-5 py-2 text-white bg-[#00BE9B] hover:bg-[#00a385] rounded-xl font-medium transition-all duration-300 shadow-md cursor-pointer">
+                        {t("login") || "تسجيل الدخول"}
+                    </button>
+                </div>
 
                 {/* Mobile menu icon */}
                 <img src={assets.menu_icon} onClick={() => setMobileMenu(true)}
@@ -64,9 +79,16 @@ const Navbar = ({ changeLanguage }) => {
                     <a href="#DownloadApp" onClick={() => setMobileMenu(false)}>{t("nav_download")}</a>
                     <a href="#Contact" onClick={() => setMobileMenu(false)}>{t("nav_contact")}</a>
 
-                    {/* Change lan inside mobible */}
+                    {/* زرار اللوجن في الموبايل */}
+                    <button 
+                        onClick={(e) => { setMobileMenu(false); handleGoToLogin(e); }}
+                        className="mt-2 px-6 py-2 bg-[#00BE9B] text-white rounded-lg cursor-pointer">
+                        {t("login") || "تسجيل الدخول"}
+                    </button>
+
+                    {/* Change lang inside mobile */}
                     <button onClick={() => { toggleLang(); setMobileMenu(false); }}
-                        className="mt-4 px-6 py-2 bg-black text-white rounded">
+                        className="mt-2 px-6 py-2 bg-black text-white rounded">
                         {nextLang}
                     </button>
                 </ul>
