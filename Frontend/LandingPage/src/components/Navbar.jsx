@@ -63,12 +63,6 @@ const Navbar = ({ changeLanguage }) => {
                         {t("dashboard") || "لوحة التحكم"}
                     </button>
 
-                    {/* زر تسجيل الدخول */}
-                    <button 
-                        onClick={handleGoToLogin}
-                        className="px-4 py-2 text-white bg-[#00BE9B] hover:bg-[#00a385] rounded-xl font-medium transition-all duration-300 shadow-md cursor-pointer">
-                        {t("login") || "تسجيل الدخول"}
-                    </button>
                 </div>
 
                 {/* Mobile menu icon */}
