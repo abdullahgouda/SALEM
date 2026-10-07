@@ -9,7 +9,7 @@ import StreetsHistoryDetails from "./StreetsHistoryDetails";
 import StreetsHistoryMap from "./StreetsHistoryMap";
 import StreetsHistoryEmpty from "./StreetsHistoryEmpty";
 
-import { getStreetsHistory } from "../../api/StreetsHistory_api.js";
+import { getStreetsHistory } from "../../api/streets_history_api.js";
 
 function StreetsHistoryPage() {
   const { t, i18n } = useTranslation();
