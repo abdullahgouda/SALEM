@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { assets } from '../assets/assets';
 import { useTranslation } from "react-i18next";
 
-// تحديد رابط الـ Dashboard (بورت 5174 افتراضياً للـ local)
-const DASHBOARD_URL = import.meta.env.VITE_DASHBOARD_URL || "http://localhost:5174";
+// تحديد رابط الـ Dashboard
+const DASHBOARD_URL = import.meta.env.VITE_DASHBOARD_URL || "https://dashboardsalem-psi.vercel.app";
 
 const Navbar = ({ changeLanguage }) => {
 
@@ -22,10 +22,16 @@ const Navbar = ({ changeLanguage }) => {
         changeLanguage(newLang); 
     };
 
-    // دالة التوجيه المباشر للـ Dashboard
+    // دالة التوجيه لصفحة تسجيل الدخول
     const handleGoToLogin = (e) => {
         e.preventDefault();
         window.location.href = `${DASHBOARD_URL}/login`;
+    };
+
+    // دالة التوجيه المباشر للـ Dashboard الرئيسية
+    const handleGoToDashboard = (e) => {
+        e.preventDefault();
+        window.location.href = DASHBOARD_URL;
     };
 
     return (
@@ -43,16 +49,24 @@ const Navbar = ({ changeLanguage }) => {
                     <a href="#Contact" className="hover:text-gray-300">{t("nav_contact")}</a>
                 </ul>
 
-                {/* Actions (Lang + Login) - Desktop */}
-                <div className="hidden md:flex items-center gap-4">
+                {/* Actions (Lang + Dashboard + Login) - Desktop */}
+                <div className="hidden md:flex items-center gap-3">
                     <button onClick={toggleLang}
-                        className="px-4 py-2 text-white hover:text-gray-300 transition">
+                        className="px-3 py-2 text-white hover:text-gray-300 transition">
                         {nextLang}
                     </button>
 
+                    {/* زر الذهاب للـ Dashboard */}
+                    <button 
+                        onClick={handleGoToDashboard}
+                        className="px-4 py-2 text-white border border-[#00BE9B] hover:bg-[#00BE9B] rounded-xl font-medium transition-all duration-300 shadow-md cursor-pointer">
+                        {t("dashboard") || "لوحة التحكم"}
+                    </button>
+
+                    {/* زر تسجيل الدخول */}
                     <button 
                         onClick={handleGoToLogin}
-                        className="px-5 py-2 text-white bg-[#00BE9B] hover:bg-[#00a385] rounded-xl font-medium transition-all duration-300 shadow-md cursor-pointer">
+                        className="px-4 py-2 text-white bg-[#00BE9B] hover:bg-[#00a385] rounded-xl font-medium transition-all duration-300 shadow-md cursor-pointer">
                         {t("login") || "تسجيل الدخول"}
                     </button>
                 </div>
@@ -79,16 +93,23 @@ const Navbar = ({ changeLanguage }) => {
                     <a href="#DownloadApp" onClick={() => setMobileMenu(false)}>{t("nav_download")}</a>
                     <a href="#Contact" onClick={() => setMobileMenu(false)}>{t("nav_contact")}</a>
 
+                    {/* زرار الـ Dashboard في الموبايل */}
+                    <button 
+                        onClick={(e) => { setMobileMenu(false); handleGoToDashboard(e); }}
+                        className="mt-2 px-6 py-2 border-2 border-[#00BE9B] text-[#00BE9B] font-semibold rounded-lg cursor-pointer">
+                        {t("dashboard") || "لوحة التحكم"}
+                    </button>
+
                     {/* زرار اللوجن في الموبايل */}
                     <button 
                         onClick={(e) => { setMobileMenu(false); handleGoToLogin(e); }}
-                        className="mt-2 px-6 py-2 bg-[#00BE9B] text-white rounded-lg cursor-pointer">
+                        className="px-6 py-2 bg-[#00BE9B] text-white rounded-lg cursor-pointer">
                         {t("login") || "تسجيل الدخول"}
                     </button>
 
                     {/* Change lang inside mobile */}
                     <button onClick={() => { toggleLang(); setMobileMenu(false); }}
-                        className="mt-2 px-6 py-2 bg-black text-white rounded">
+                        className="px-6 py-2 bg-black text-white rounded">
                         {nextLang}
                     </button>
                 </ul>
